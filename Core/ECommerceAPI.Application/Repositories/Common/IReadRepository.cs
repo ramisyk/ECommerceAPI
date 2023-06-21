@@ -5,8 +5,8 @@ namespace ECommerceAPI.Application.Repositories.Common;
 
 public interface IReadRepository<T> : IRepository<T> where T : BaseEntity
 {
-    IQueryable<T> GetAll();
-    IQueryable<T> GetWhere(Expression<Func<T, bool>> filter);
-    Task<T> GetSingleAsync(Expression<Func<T, bool>> filter);
-    Task<T> GetByIdAsync(Guid id);
+    IQueryable<T> GetAll(bool tracking = false);
+    IQueryable<T> GetWhere(Expression<Func<T, bool>> filter, bool tracking = false);
+    Task<T> GetSingleAsync(Expression<Func<T, bool>> filter, bool tracking = false);
+    Task<T> GetByIdAsync(Guid id, bool tracking = false);
 }

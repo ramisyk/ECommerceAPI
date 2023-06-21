@@ -22,7 +22,6 @@ namespace ECommerceAPI.WebAPI.Controllers
         public async Task<IActionResult> Get(Guid id)
         {
             return  Ok(await _productReadRepository.GetByIdAsync(id));
-
         }
 
         [HttpGet("Get2")]
