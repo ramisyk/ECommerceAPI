@@ -14,4 +14,10 @@
     <ProjectReference Include="..\ECommerceAPI.Domain\ECommerceAPI.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\CustomerRepositories\" />
+    <Folder Include="Repositories\ProductRepositories\" />
+    <Folder Include="Repositories\OrderRepositories\" />
+  </ItemGroup>
+
 </Project>

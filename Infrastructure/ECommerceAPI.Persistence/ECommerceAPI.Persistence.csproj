@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -13,6 +13,9 @@
   <ItemGroup>
     <Folder Include="Contexts\" />
     <Folder Include="Repositories\Common\" />
+    <Folder Include="Repositories\CustomerRepository\" />
+    <Folder Include="Repositories\ProductRepositories\" />
+    <Folder Include="Repositories\OrderRepositories\" />
   </ItemGroup>
 
   <ItemGroup>
