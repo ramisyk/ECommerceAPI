@@ -34,6 +34,7 @@ public class ReadRepository<T> : IReadRepository<T> where T : BaseEntity
 
     public async Task<T> GetByIdAsync(Guid id)
     {
-        return await Table.FirstOrDefaultAsync(entity => entity.Id == id);
+        return await Table.FindAsync(id);
+        //return await Table.FirstOrDefaultAsync(entity => entity.Id == id);
     }
 }
