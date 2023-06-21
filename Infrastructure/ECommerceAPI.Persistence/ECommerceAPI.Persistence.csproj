@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Contexts\" />
+    <Folder Include="Repositories\Common\" />
   </ItemGroup>
 
   <ItemGroup>
