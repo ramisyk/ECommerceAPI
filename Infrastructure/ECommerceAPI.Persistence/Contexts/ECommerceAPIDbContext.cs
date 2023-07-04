@@ -24,7 +24,7 @@ public class ECommerceAPIDbContext : DbContext
             {
                 EntityState.Added => entry.Entity.CreatedDate = DateTime.Now,
                 EntityState.Modified => entry.Entity.UpdatedDate = DateTime.Now,
-
+                _ => DateTime.Now,
             };
         }
         return await base.SaveChangesAsync(cancellationToken);

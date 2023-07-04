@@ -18,6 +18,7 @@
     <Folder Include="Repositories\CustomerRepositories\" />
     <Folder Include="Repositories\ProductRepositories\" />
     <Folder Include="Repositories\OrderRepositories\" />
+    <Folder Include="ViewModels\Products\" />
   </ItemGroup>
 
 </Project>
