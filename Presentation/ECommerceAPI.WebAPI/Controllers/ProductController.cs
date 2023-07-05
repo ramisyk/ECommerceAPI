@@ -27,7 +27,9 @@ namespace ECommerceAPI.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] Pagination pagination)
         {
+            // paginator needs total count information to get other pages
             var totalCount = _productReadRepository.GetAll(false).Count();
+
             var products = _productReadRepository.GetAll(false)
                 .Skip(pagination.Page * pagination.Size)
                 .Take(pagination.Size)
