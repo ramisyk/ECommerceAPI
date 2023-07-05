@@ -25,7 +25,15 @@ namespace ECommerceAPI.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(_productReadRepository.GetAll(false));
+            return Ok(_productReadRepository.GetAll(false).Select(p => new
+            {
+                p.Id,
+                p.Name,
+                p.Stock,
+                p.Price,
+                p.CreatedDate,
+                p.UpdatedDate
+            }));
         }
 
         [HttpGet("{id}")]
