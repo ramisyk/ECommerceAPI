@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using ECommerceAPI.Application.ViewModels.Products;
+using ECommerceAPI.Application.RequestParameters;
+using System.Linq;
 
 namespace ECommerceAPI.WebAPI.Controllers
 {
@@ -23,17 +25,23 @@ namespace ECommerceAPI.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] Pagination pagination)
         {
-            return Ok(_productReadRepository.GetAll(false).Select(p => new
-            {
-                p.Id,
-                p.Name,
-                p.Stock,
-                p.Price,
-                p.CreatedDate,
-                p.UpdatedDate
-            }));
+            var totalCount = _productReadRepository.GetAll(false).Count();
+            var products = _productReadRepository.GetAll(false)
+                .Skip(pagination.Page * pagination.Size)
+                .Take(pagination.Size)
+                .Select(p => new
+                {
+                    p.Id,
+                    p.Name,
+                    p.Stock,
+                    p.Price,
+                    p.CreatedDate,
+                    p.UpdatedDate
+                });
+
+            return Ok(products);
         }
 
         [HttpGet("{id}")]
