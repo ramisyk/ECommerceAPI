@@ -43,7 +43,11 @@ namespace ECommerceAPI.WebAPI.Controllers
                     p.UpdatedDate
                 });
 
-            return Ok(products);
+            return Ok(new
+            {
+                totalCount,
+                products
+            });
         }
 
         [HttpGet("{id}")]
