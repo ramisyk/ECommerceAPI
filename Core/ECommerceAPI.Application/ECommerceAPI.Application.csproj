@@ -18,6 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Repositories\FileRepositories\" />
+    <Folder Include="Repositories\ProductImageFileRepository\" />
     <Folder Include="Services\" />
     <Folder Include="Repositories\CustomerRepositories\" />
     <Folder Include="Repositories\ProductRepositories\" />

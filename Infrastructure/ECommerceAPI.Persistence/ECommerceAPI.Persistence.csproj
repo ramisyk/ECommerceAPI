@@ -14,6 +14,9 @@
     <Folder Include="Contexts\" />
     <Folder Include="Repositories\Common\" />
     <Folder Include="Repositories\CustomerRepository\" />
+    <Folder Include="Repositories\FileRepository\" />
+    <Folder Include="Repositories\InvoiceFileRepository\" />
+    <Folder Include="Repositories\ProductImageFileRepository\" />
     <Folder Include="Repositories\ProductRepositories\" />
     <Folder Include="Repositories\OrderRepositories\" />
   </ItemGroup>
