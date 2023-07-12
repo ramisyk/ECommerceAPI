@@ -1,14 +1,14 @@
-﻿using ECommerceAPI.Application.Repositories.CustomerRepositories;
-using ECommerceAPI.Application.Repositories.OrderRepositories;
-using ECommerceAPI.Application.Repositories.ProductRepositories;
+﻿using ECommerceAPI.Application.Repositories.ProductRepositories;
 using ECommerceAPI.Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using ECommerceAPI.Application.Abstractions.Storage;
 using ECommerceAPI.Application.ViewModels.Products;
 using ECommerceAPI.Application.RequestParameters;
-using System.Linq;
-using ECommerceAPI.Application.Services;
+using ECommerceAPI.Application.Repositories.FileRepositories;
+using ECommerceAPI.Application.Repositories.InvoiceFileRepository;
+using ECommerceAPI.Application.Repositories.ProductImageFileRepository;
+using ECommerceAPI.Domain.Entities.FileEntities;
 
 namespace ECommerceAPI.WebAPI.Controllers
 {
@@ -18,15 +18,25 @@ namespace ECommerceAPI.WebAPI.Controllers
     {
         private readonly IProductWriteRepository _productWriteRepository;
         private readonly IProductReadRepository _productReadRepository;
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IFileService _fileService;
+        private readonly IFileWriteRepository _fileWriteRepository;
+        private readonly IFileReadRepository _fileReadRepository;
+        private readonly IProductImageFileReadRepository _productImageFileReadRepository;
+        private readonly IProductImageFileWriteRepository _productImageFileWriteRepository;
+        private readonly IInvoiceFileReadRepository _invoiceFileReadRepository;
+        private readonly IInvoiceFileWriteRepository _invoiceFileWriteRepository;
+        private readonly IStorageService _storageService;
 
-        public ProductsController(IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository, IWebHostEnvironment webHostEnvironment, IFileService fileService)
+        public ProductsController(IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository, IInvoiceFileWriteRepository invoiceFileWriteRepository, IInvoiceFileReadRepository invoiceFileReadRepository, IProductImageFileWriteRepository productImageFileWriteRepository, IProductImageFileReadRepository productImageFileReadRepository, IFileReadRepository fileReadRepository, IFileWriteRepository fileWriteRepository, IStorageService storageService)
         {
             _productWriteRepository = productWriteRepository;
             _productReadRepository = productReadRepository;
-            _webHostEnvironment = webHostEnvironment;
-            _fileService = fileService;
+            _invoiceFileWriteRepository = invoiceFileWriteRepository;
+            _invoiceFileReadRepository = invoiceFileReadRepository;
+            _productImageFileWriteRepository = productImageFileWriteRepository;
+            _productImageFileReadRepository = productImageFileReadRepository;
+            _fileReadRepository = fileReadRepository;
+            _fileWriteRepository = fileWriteRepository;
+            _storageService = storageService;
         }
 
         [HttpGet]
@@ -96,7 +106,27 @@ namespace ECommerceAPI.WebAPI.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Upload()
         {
-            await _fileService.UploadAsync("resources/product-images", Request.Form.Files);
+            //var allData; = await _fileService.UploadAsync("resources\\product-images", Request.Form.Files);
+
+            //await _fileWriteRepository.AddRangeAsync(allData.Select(d => new BaseFile()
+            //{
+            //    FileName = d.fileName,
+            //    Path = d.path
+            //}).ToList());
+
+            //await _invoiceFileWriteRepository.SaveAsync();
+
+            var allData = await _storageService.UploadAsync("resources\\product-images", Request.Form.Files);
+
+            await _fileWriteRepository.AddRangeAsync(allData.Select(d => new BaseFile()
+            {
+                FileName = d.fileName,
+                Path = d.pathOrContainerName,
+                Storage = _storageService.StorageName
+            }).ToList());
+
+            await _invoiceFileWriteRepository.SaveAsync();
+
             return Ok();
         }
     }

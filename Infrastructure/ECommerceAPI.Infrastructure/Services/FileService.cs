@@ -1,13 +1,10 @@
-﻿using ECommerceAPI.Application.Services;
-using ECommerceAPI.Infrastructure.Operations;
+﻿using ECommerceAPI.Infrastructure.Operations;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-using System.IO;
 
 namespace ECommerceAPI.Infrastructure.Services;
 
-public class FileService : IFileService
+public class FileService
 {
     private readonly IWebHostEnvironment _webHostEnvironment;
 
@@ -28,7 +25,7 @@ public class FileService : IFileService
             string fileNewName = await FileRenameAsync(uploadPath, file.FileName);
 
             bool result = await CopyFileAsync($"{uploadPath}\\{fileNewName}", file);
-            allData.Add((fileNewName, $"{uploadPath}\\{fileNewName}"));
+            allData.Add((fileNewName, $"{path}\\{fileNewName}"));
             results.Add(result);
         }
 

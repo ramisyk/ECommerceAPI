@@ -18,9 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Abstractions\Storage\LocalStorage\" />
     <Folder Include="Repositories\FileRepositories\" />
     <Folder Include="Repositories\ProductImageFileRepository\" />
-    <Folder Include="Services\" />
     <Folder Include="Repositories\CustomerRepositories\" />
     <Folder Include="Repositories\ProductRepositories\" />
     <Folder Include="Repositories\OrderRepositories\" />
