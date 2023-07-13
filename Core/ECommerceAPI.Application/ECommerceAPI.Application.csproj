@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Abstractions\Storage\LocalStorage\" />
+    <Folder Include="Abstractions\Storage\AzureStorage\" />
     <Folder Include="Repositories\FileRepositories\" />
     <Folder Include="Repositories\ProductImageFileRepository\" />
     <Folder Include="Repositories\CustomerRepositories\" />
