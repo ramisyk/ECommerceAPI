@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -12,7 +12,7 @@
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
     <PackageReference Include="MediatR" Version="11.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +22,7 @@
   <ItemGroup>
     <Folder Include="Abstractions\Storage\LocalStorage\" />
     <Folder Include="Abstractions\Storage\AzureStorage\" />
+    <Folder Include="Features\Commands\AppUserCommands\CreateUser\" />
     <Folder Include="Features\Commands\ProductCommands\CreateProduct\" />
     <Folder Include="Features\Commands\ProductCommands\DeleteProduct\" />
     <Folder Include="Features\Commands\ProductCommands\UpdateProduct\" />
@@ -29,6 +30,7 @@
     <Folder Include="Features\Queries\ProductImageQueries\GetProductImages\" />
     <Folder Include="Features\Queries\ProductQueries\GetAllProducts\" />
     <Folder Include="Features\Queries\ProductQueries\GetProductById\" />
+    <Folder Include="Exceptions\" />
     <Folder Include="Repositories\FileRepositories\" />
     <Folder Include="Repositories\ProductImageFileRepository\" />
     <Folder Include="Repositories\CustomerRepositories\" />

@@ -8,6 +8,12 @@
 
   <ItemGroup>
     <Folder Include="Entities\Common\" />
+    <Folder Include="Entities\UserEntities\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.39" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.9" />
   </ItemGroup>
 
 </Project>
