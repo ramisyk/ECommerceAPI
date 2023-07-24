@@ -1,5 +1,4 @@
 ﻿using ECommerceAPI.Application.Repositories.ProductRepositories;
-using ECommerceAPI.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using ECommerceAPI.Application.Abstractions.Storage;
@@ -7,23 +6,20 @@ using ECommerceAPI.Application.Features.Commands.ProductCommands.CreateProduct;
 using ECommerceAPI.Application.Features.Commands.ProductCommands.DeleteProduct;
 using ECommerceAPI.Application.Features.Queries.ProductQueries.GetAllProducts;
 using ECommerceAPI.Application.Features.Queries.ProductQueries.GetProductById;
-using ECommerceAPI.Application.ViewModels.Products;
-using ECommerceAPI.Application.RequestParameters;
-using ECommerceAPI.Application.Repositories.FileRepositories;
-using ECommerceAPI.Application.Repositories.InvoiceFileRepository;
 using ECommerceAPI.Application.Repositories.ProductImageFileRepository;
-using ECommerceAPI.Domain.Entities.FileEntities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using ECommerceAPI.Application.Features.Commands.ProductCommands.UpdateProduct;
 using ECommerceAPI.Application.Features.Commands.ProductImageCommands.DeleteProductImage;
 using ECommerceAPI.Application.Features.Commands.ProductImageCommands.UploadProductImages;
 using ECommerceAPI.Application.Features.Queries.ProductImageQueries.GetProductImages;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ECommerceAPI.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Admin")]
+
     public class ProductsController : ControllerBase
     {
         private readonly IProductWriteRepository _productWriteRepository;

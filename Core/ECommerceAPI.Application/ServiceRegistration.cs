@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using ECommerceAPI.Application.Abstractions.TokenServices;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ECommerceAPI.Application;
