@@ -17,6 +17,7 @@ public class ECommerceAPIDbContext : IdentityDbContext<AppUser, AppRole, string>
     public DbSet<Order> Orders { get; set; }
     public DbSet<Customer> Customers { get; set; }
 
+
     public DbSet<BaseFile> BaseFiles { get; set; }
     public DbSet<ProductImageFile> ProductImageFiles { get; set; }
     public DbSet<InvoiceFile> InvoiceFiles { get; set; }

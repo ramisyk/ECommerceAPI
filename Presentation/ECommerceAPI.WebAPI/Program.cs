@@ -25,6 +25,7 @@ builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddStorage<LocalStorage>();
 
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer("Admin",options =>
     {
