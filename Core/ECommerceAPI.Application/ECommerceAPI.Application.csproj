@@ -10,7 +10,6 @@
     <PackageReference Include="FluentValidation" Version="11.5.2" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
-    <PackageReference Include="Google.Apis.Auth" Version="1.57.0" />
     <PackageReference Include="MediatR" Version="11.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
@@ -25,6 +24,7 @@
     <Folder Include="Abstractions\Storage\LocalStorage\" />
     <Folder Include="Abstractions\Storage\AzureStorage\" />
     <Folder Include="Dtos\Facebook\" />
+    <Folder Include="Dtos\UserDtos\" />
     <Folder Include="Features\Commands\AppUserCommands\CreateUser\" />
     <Folder Include="Features\Commands\AppUserCommands\LoginUser\" />
     <Folder Include="Features\Commands\AppUserCommands\GoogleLogin\" />
@@ -36,12 +36,12 @@
     <Folder Include="Features\Queries\ProductImageQueries\GetProductImages\" />
     <Folder Include="Features\Queries\ProductQueries\GetAllProducts\" />
     <Folder Include="Features\Queries\ProductQueries\GetProductById\" />
-    <Folder Include="Exceptions\" />
     <Folder Include="Repositories\FileRepositories\" />
     <Folder Include="Repositories\ProductImageFileRepository\" />
     <Folder Include="Repositories\CustomerRepositories\" />
     <Folder Include="Repositories\ProductRepositories\" />
     <Folder Include="Repositories\OrderRepositories\" />
+    <Folder Include="Services\AuthenticationServices\" />
     <Folder Include="Validators\Products\" />
     <Folder Include="ViewModels\Products\" />
   </ItemGroup>

@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Contexts\" />
+    <Folder Include="Services\" />
     <Folder Include="Repositories\Common\" />
     <Folder Include="Repositories\CustomerRepository\" />
     <Folder Include="Repositories\FileRepository\" />
@@ -22,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Auth" Version="1.61.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.39" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
