@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography;
 using System.Text;
 using ECommerceAPI.Application.Abstractions.TokenServices;
 using ECommerceAPI.Application.Dtos;
@@ -35,6 +36,16 @@ public class TokenHandler : ITokenHandler
 
         JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
         token.AccessToken = tokenHandler.WriteToken(securityToken);
+
+        token.RefreshToken = CreateRefreshToken(15);
         return token;
+    }
+
+    public string CreateRefreshToken(int second)
+    {
+        byte[] number = new byte[32];
+        using RandomNumberGenerator random = RandomNumberGenerator.Create();
+        random.GetBytes(number);
+        return Convert.ToBase64String(number);
     }
 }

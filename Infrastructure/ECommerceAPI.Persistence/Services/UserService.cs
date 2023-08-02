@@ -1,5 +1,6 @@
 ﻿using Azure.Core;
 using ECommerceAPI.Application.Dtos.UserDtos;
+using ECommerceAPI.Application.Exceptions;
 using ECommerceAPI.Application.Features.Commands.AppUserCommands.CreateUser;
 using ECommerceAPI.Application.Services;
 using ECommerceAPI.Domain.Entities.UserEntities;
@@ -15,28 +16,6 @@ public class UserService : IUserService
     {
         _userManager = userManager;
     }
-
-    //public async Task<CreateUserResponse> CreateAsync(CreateUser user)
-    //{
-    //    IdentityResult result = await _userManager.CreateAsync(new()
-    //    {
-    //        Id = Guid.NewGuid().ToString(),
-    //        UserName = user.Username,
-    //        Email = user.Email,
-    //        NameSurname = user.NameSurname,
-    //    }, user.Password);
-
-    //    CreateUserCommandResponse response = new() { Succeeded = result.Succeeded };
-
-    //    if (result.Succeeded)
-    //        response.Message = "User Created";
-    //    else
-    //        foreach (var error in result.Errors)
-    //            response.Message += $"{error.Code} - {error.Description}\n";
-
-    //    return response;
-    //}
-
     public async Task<CreateUserResponse> CreateAsync(CreateUser model)
     {
         IdentityResult result = await _userManager.CreateAsync(new()
@@ -56,5 +35,12 @@ public class UserService : IUserService
                 response.Message += $"{error.Code} - {error.Description}\n";
 
         return response;
+    }
+
+    public async Task UpdateRefreshToken(string refreshToken, AppUser user, DateTime accessTokenExpirationDate, int refreshTokenLifeTime)
+    {
+        user.RefreshToken = refreshToken;
+        user.RefreshTokenEndDate = accessTokenExpirationDate.AddSeconds(refreshTokenLifeTime);
+        await _userManager.UpdateAsync(user);
     }
 }

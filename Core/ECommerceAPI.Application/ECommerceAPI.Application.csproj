@@ -29,6 +29,7 @@
     <Folder Include="Features\Commands\AppUserCommands\LoginUser\" />
     <Folder Include="Features\Commands\AppUserCommands\GoogleLogin\" />
     <Folder Include="Features\Commands\AppUserCommands\FacebookLogin\" />
+    <Folder Include="Features\Commands\AppUserCommands\LoginWithRefreshToken\" />
     <Folder Include="Features\Commands\ProductCommands\CreateProduct\" />
     <Folder Include="Features\Commands\ProductCommands\DeleteProduct\" />
     <Folder Include="Features\Commands\ProductCommands\UpdateProduct\" />

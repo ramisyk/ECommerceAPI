@@ -18,13 +18,15 @@ public class AuthService : IAuthService
     private readonly UserManager<AppUser> _userManager;
     private readonly ITokenHandler _tokenHandler;
     private readonly SignInManager<AppUser> _signInManager;
+    private readonly IUserService _userService;
 
-    public AuthService(IHttpClientFactory httpClientFactory, IConfiguration configuration, UserManager<AppUser> userManager, ITokenHandler tokenHandler, SignInManager<AppUser> signInManager)
+    public AuthService(IHttpClientFactory httpClientFactory, IConfiguration configuration, UserManager<AppUser> userManager, ITokenHandler tokenHandler, SignInManager<AppUser> signInManager, IUserService userService)
     {
         _httpClient = httpClientFactory.CreateClient(); _configuration = configuration;
         _userManager = userManager;
         _tokenHandler = tokenHandler;
         _signInManager = signInManager;
+        _userService = userService;
     }
 
     async Task<Token> CreateUserExternalAsync(AppUser user, string email, string name, UserLoginInfo info, int accessTokenLifeTime)
@@ -52,6 +54,7 @@ public class AuthService : IAuthService
             await _userManager.AddLoginAsync(user, info); //AspNetUserLogins
 
             Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime);
+            await _userService.UpdateRefreshToken(token.RefreshToken, user, token.Expiration, 5);
             return token;
         }
         throw new Exception("Invalid external authentication.");
@@ -108,8 +111,22 @@ public class AuthService : IAuthService
         if (result.Succeeded) //Authentication başarılı!
         {
             Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime);
+            await _userService.UpdateRefreshToken(token.RefreshToken, user, token.Expiration, 25);
             return token;
         }
         throw new AuthenticationErrorException();
+    }
+
+    public async Task<Token> LoginWithRefreshTokenAsync(string refreshToken)
+    {
+        var user = _userManager.Users.FirstOrDefault(u => u.RefreshToken == refreshToken);
+        if (user != null && user?.RefreshTokenEndDate > DateTime.UtcNow)
+        {
+            Token token = _tokenHandler.CreateAccessToken(15);
+            await _userService.UpdateRefreshToken(token.RefreshToken, user, token.Expiration, 5);
+            return token;
+        }
+
+        throw new NotFoundUserException();
     }
 }

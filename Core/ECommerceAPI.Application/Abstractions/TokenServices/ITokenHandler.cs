@@ -5,5 +5,5 @@ namespace ECommerceAPI.Application.Abstractions.TokenServices;
 public interface ITokenHandler
 {
     Token CreateAccessToken(int second);
-
+    string CreateRefreshToken(int second);
 }

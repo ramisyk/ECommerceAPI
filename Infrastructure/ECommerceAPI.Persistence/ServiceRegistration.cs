@@ -47,8 +47,6 @@ public static class ServiceRegistration
         services.AddScoped<IInvoiceFileWriteRepository, InvoiceFileWriteRepository>();
 
         services.AddScoped<IUserService, UserService>();
-
-        services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IExternalAuthentication, AuthService>();
         services.AddScoped<IInternalAuthentication, AuthService>();
