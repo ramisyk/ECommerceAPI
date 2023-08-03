@@ -53,7 +53,7 @@ public class AuthService : IAuthService
         {
             await _userManager.AddLoginAsync(user, info); //AspNetUserLogins
 
-            Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime);
+            Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime, user);
             await _userService.UpdateRefreshToken(token.RefreshToken, user, token.Expiration, 5);
             return token;
         }
@@ -110,7 +110,7 @@ public class AuthService : IAuthService
         SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
         if (result.Succeeded) //Authentication başarılı!
         {
-            Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime);
+            Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime, user);
             await _userService.UpdateRefreshToken(token.RefreshToken, user, token.Expiration, 25);
             return token;
         }
@@ -122,7 +122,7 @@ public class AuthService : IAuthService
         var user = _userManager.Users.FirstOrDefault(u => u.RefreshToken == refreshToken);
         if (user != null && user?.RefreshTokenEndDate > DateTime.UtcNow)
         {
-            Token token = _tokenHandler.CreateAccessToken(15);
+            Token token = _tokenHandler.CreateAccessToken(15, user);
             await _userService.UpdateRefreshToken(token.RefreshToken, user, token.Expiration, 5);
             return token;
         }

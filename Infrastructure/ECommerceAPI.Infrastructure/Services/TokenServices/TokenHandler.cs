@@ -1,8 +1,10 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using ECommerceAPI.Application.Abstractions.TokenServices;
 using ECommerceAPI.Application.Dtos;
+using ECommerceAPI.Domain.Entities.UserEntities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -17,7 +19,7 @@ public class TokenHandler : ITokenHandler
         _configuration = configuration;
     }
 
-    public Token CreateAccessToken(int second)
+    public Token CreateAccessToken(int second, AppUser user)
     {
         Token token = new Token();
 
@@ -32,7 +34,11 @@ public class TokenHandler : ITokenHandler
             issuer: _configuration["Token:Issuer"],
             expires: token.Expiration,
             notBefore: DateTime.UtcNow,
-            signingCredentials: signingCredentials);
+            signingCredentials: signingCredentials,
+            claims: new List<Claim>
+            {
+                new(ClaimTypes.Name, user.UserName)
+            });
 
         JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
         token.AccessToken = tokenHandler.WriteToken(securityToken);
