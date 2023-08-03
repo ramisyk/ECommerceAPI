@@ -8,6 +8,7 @@ using ECommerceAPI.Infrastructure.Services.Storage.LocalStorage;
 using ECommerceAPI.Persistence;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Context;
@@ -31,6 +32,7 @@ builder.Services.AddApplicationServices();
 builder.Services.AddStorage<LocalStorage>();
 
 // todo column options will be added
+// todo seq will be added
 Logger log = new LoggerConfiguration()
     .WriteTo.File("logs/log.txt")
     .WriteTo.MSSqlServer(builder.Configuration.GetConnectionString("MsSql"), "Logs", 
@@ -39,6 +41,15 @@ Logger log = new LoggerConfiguration()
     .MinimumLevel.Information()
     .CreateLogger();
 builder.Host.UseSerilog(log);
+
+builder.Services.AddHttpLogging(logging =>
+{
+    logging.LoggingFields = HttpLoggingFields.All;
+    logging.RequestHeaders.Add("sec-ch-ua");
+    logging.MediaTypeOptions.AddText("application/javascript");
+    logging.RequestBodyLogLimit = 4096;
+    logging.ResponseBodyLogLimit = 4096;
+});
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -80,6 +91,7 @@ if (app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseSerilogRequestLogging();
+app.UseHttpLogging();
 
 app.UseCors();
 
