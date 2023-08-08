@@ -6,6 +6,7 @@ using ECommerceAPI.Infrastructure;
 using ECommerceAPI.Infrastructure.Filters;
 using ECommerceAPI.Infrastructure.Services.Storage.LocalStorage;
 using ECommerceAPI.Persistence;
+using ECommerceAPI.WebAPI.Extensions;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
@@ -89,6 +90,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseStaticFiles();
+
+app.ConfigureExceptionHandler(app.Services.GetRequiredService<ILogger<Program>>());
 
 app.UseSerilogRequestLogging();
 app.UseHttpLogging();
