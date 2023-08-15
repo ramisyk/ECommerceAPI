@@ -6,6 +6,8 @@ using ECommerceAPI.Infrastructure;
 using ECommerceAPI.Infrastructure.Filters;
 using ECommerceAPI.Infrastructure.Services.Storage.LocalStorage;
 using ECommerceAPI.Persistence;
+using ECommerceAPI.SignalR;
+using ECommerceAPI.SignalR.Hubs;
 using ECommerceAPI.WebAPI.Extensions;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -30,13 +32,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddPersistenceServices();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationServices();
+builder.Services.AddSignalRServices();
 builder.Services.AddStorage<LocalStorage>();
 
 // todo column options will be added
 // todo seq will be added
 Logger log = new LoggerConfiguration()
     .WriteTo.File("logs/log.txt")
-    .WriteTo.MSSqlServer(builder.Configuration.GetConnectionString("MsSql"), "Logs", 
+    .WriteTo.MSSqlServer(builder.Configuration.GetConnectionString("MsSql"), "Logs",
         autoCreateSqlTable: true)
     .Enrich.FromLogContext()
     .MinimumLevel.Information()
@@ -54,7 +57,7 @@ builder.Services.AddHttpLogging(logging =>
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer("Admin",options =>
+    .AddJwtBearer("Admin", options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters()
         {
@@ -74,11 +77,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 
-builder.Services.AddCors(options => 
-    options.AddDefaultPolicy(policy => 
+builder.Services.AddCors(options =>
+    options.AddDefaultPolicy(policy =>
         policy.AllowAnyHeader()
             .AllowAnyMethod()
-            .AllowAnyOrigin()));
+            .AllowAnyOrigin()
+            .AllowCredentials()
+        ));
 
 var app = builder.Build();
 
@@ -111,5 +116,5 @@ app.Use(async (context, next) =>
 });
 
 app.MapControllers();
-
+app.MapHubs();
 app.Run();
