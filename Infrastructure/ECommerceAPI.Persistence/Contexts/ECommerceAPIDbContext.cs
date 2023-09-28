@@ -31,9 +31,9 @@ public class ECommerceAPIDbContext : IdentityDbContext<AppUser, AppRole, string>
         {
             _ = entry.State switch
             {
-                EntityState.Added => entry.Entity.CreatedDate = DateTime.Now,
-                EntityState.Modified => entry.Entity.UpdatedDate = DateTime.Now,
-                _ => DateTime.Now,
+                EntityState.Added => entry.Entity.CreatedDate = DateTime.UtcNow,
+                EntityState.Modified => entry.Entity.UpdatedDate = DateTime.UtcNow,
+                _ => DateTime.UtcNow,
             };
         }
         return await base.SaveChangesAsync(cancellationToken);

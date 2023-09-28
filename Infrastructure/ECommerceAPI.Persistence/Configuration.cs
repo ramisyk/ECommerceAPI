@@ -16,7 +16,7 @@ static class Configuration
                 "../../Presentation/ECommerceAPI.WebAPI"));
             configurationManager.AddJsonFile("appsettings.json");
 
-            return configurationManager.GetConnectionString("MsSql");
+            return configurationManager.GetConnectionString("PostgreSQL");
         }
     }
 }

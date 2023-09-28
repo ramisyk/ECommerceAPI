@@ -39,8 +39,8 @@ builder.Services.AddStorage<LocalStorage>();
 // todo seq will be added
 Logger log = new LoggerConfiguration()
     .WriteTo.File("logs/log.txt")
-    .WriteTo.MSSqlServer(builder.Configuration.GetConnectionString("MsSql"), "Logs",
-        autoCreateSqlTable: true)
+//    .WriteTo.MSSqlServer(builder.Configuration.GetConnectionString("MsSql"), "Logs",
+//        autoCreateSqlTable: true)
     .Enrich.FromLogContext()
     .MinimumLevel.Information()
     .CreateLogger();
@@ -81,7 +81,8 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy =>
         policy.AllowAnyHeader()
             .AllowAnyMethod()
-            .AllowAnyOrigin()
+            //.AllowAnyOrigin()
+            .SetIsOriginAllowed(origin => true)
             .AllowCredentials()
         ));
 
@@ -96,7 +97,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 
-app.ConfigureExceptionHandler(app.Services.GetRequiredService<ILogger<Program>>());
+// app.ConfigureExceptionHandler(app.Services.GetRequiredService<ILogger<Program>>());
 
 app.UseSerilogRequestLogging();
 app.UseHttpLogging();
