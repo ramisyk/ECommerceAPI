@@ -43,6 +43,7 @@ public class LocalStorage : Storage, ILocalStorage
     }
     public async Task<List<(string fileName, string pathOrContainerName)>> UploadAsync(string path, IFormFileCollection files)
     {
+        var path1 = _webHostEnvironment.WebRootPath; 
         string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, path);
         if (!Directory.Exists(uploadPath))
             Directory.CreateDirectory(uploadPath);
@@ -52,8 +53,8 @@ public class LocalStorage : Storage, ILocalStorage
         {
             string fileNewName = await FileRenameAsync(path, file.Name, HasFile);
 
-            await CopyFileAsync($"{uploadPath}\\{fileNewName}", file);
-            allData.Add((fileNewName, $"{path}\\{fileNewName}"));
+            await CopyFileAsync($"{uploadPath}/{fileNewName}", file);
+            allData.Add((fileNewName, $"{path}/{fileNewName}"));
         }
 
         return allData;

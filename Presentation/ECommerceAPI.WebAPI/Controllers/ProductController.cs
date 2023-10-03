@@ -18,7 +18,6 @@ namespace ECommerceAPI.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "Admin")]
 
     public class ProductsController : ControllerBase
     {
@@ -56,6 +55,7 @@ namespace ECommerceAPI.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = "Admin")]
         public async Task<IActionResult> Post([FromBody] CreateProductCommandRequest request)
         {
             CreateProductCommandResponse response = await _mediator.Send(request);
@@ -63,6 +63,7 @@ namespace ECommerceAPI.WebAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize(AuthenticationSchemes = "Admin")]
         public async Task<IActionResult> Put([FromBody] UpdateProductCommandRequest request)
         {
             UpdateProductCommandResponse response = await _mediator.Send(request);
@@ -70,6 +71,7 @@ namespace ECommerceAPI.WebAPI.Controllers
         }
 
         [HttpDelete("{Id}")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         public async Task<IActionResult> Delete([FromRoute] DeleteProductCommandRequest request)
         {
             DeleteProductCommandResponse response = await _mediator.Send(request);
@@ -77,6 +79,7 @@ namespace ECommerceAPI.WebAPI.Controllers
         }
 
         [HttpPost("[action]")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         public async Task<IActionResult> UploadProductImage([FromQuery] UploadProductImagesCommandRequest request)
         {
             request.Files = Request.Form.Files;
@@ -93,6 +96,7 @@ namespace ECommerceAPI.WebAPI.Controllers
 
         // id = product id, it called only id because of http client service in client side
         [HttpDelete("[action]/{Id}")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         public async Task<IActionResult> DeleteProductImage([FromRoute] DeleteProductImageCommandRequest request)
         {
             //request.ImageId = imageId;

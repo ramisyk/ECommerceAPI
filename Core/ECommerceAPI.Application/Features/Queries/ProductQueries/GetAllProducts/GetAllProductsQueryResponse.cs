@@ -5,5 +5,5 @@ namespace ECommerceAPI.Application.Features.Queries.ProductQueries.GetAllProduct
 public class GetAllProductsQueryResponse
 {
     public object Products { get; set; }
-    public int TotalCount { get; set; }
+    public int TotalProductCount { get; set; }
 }

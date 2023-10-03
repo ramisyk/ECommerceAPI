@@ -34,7 +34,7 @@ public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQueryReq
         return new()
         {
             Products = products,
-            TotalCount = totalCount
+            TotalProductCount = totalCount
         };
     }
 }

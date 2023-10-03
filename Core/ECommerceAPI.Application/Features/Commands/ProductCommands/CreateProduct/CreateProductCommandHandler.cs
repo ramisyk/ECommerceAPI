@@ -1,5 +1,6 @@
 ﻿using ECommerceAPI.Application.Abstractions.Hubs;
 using ECommerceAPI.Application.Repositories.ProductRepositories;
+using ECommerceAPI.Domain.Entities;
 using MediatR;
 using System.Net;
 
@@ -18,13 +19,32 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandR
 
     public async Task<CreateProductCommandResponse> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
     {
+        /*
         await _productWriteRepository.AddAsync(new()
         {
             Name = request.Name,
             Price = request.Price,
             Stock = request.Stock
         });
+
+        */
+
+        var productList = new List<Product>();
+        for (int i = 27; i < 101; i++)
+        {
+            var product = new Product()
+            {
+                Name = $"Ürün {i}",
+                Stock = i * 10,
+                Price = i * 100
+            };
+            productList.Add(product);
+        }
+
+        await _productWriteRepository.AddRangeAsync(productList);
+
         await _productWriteRepository.SaveAsync();
+
         await _productHubService.ProductAddedMessageAsync($"{request.Name} created...");
         return new();
     }

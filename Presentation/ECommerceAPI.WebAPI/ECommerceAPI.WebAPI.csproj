@@ -31,11 +31,14 @@
   <ItemGroup>
     <Folder Include="Middleware\" />
     <Folder Include="Extensions\" />
-    <Folder Include="wwwroot\" />
     <Folder Include="logs\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="logs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\" />
   </ItemGroup>
 </Project>

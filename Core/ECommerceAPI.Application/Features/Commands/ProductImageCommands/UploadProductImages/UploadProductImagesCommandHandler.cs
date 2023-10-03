@@ -22,7 +22,7 @@ public class UploadProductImagesCommandHandler : IRequestHandler<UploadProductIm
 
     public async Task<UploadProductImagesCommandResponse> Handle(UploadProductImagesCommandRequest request, CancellationToken cancellationToken)
     {
-        List<(string fileName, string pathOrContainerName)> result = await _storageService.UploadAsync("photo-images", request.Files);
+        List<(string fileName, string pathOrContainerName)> result = await _storageService.UploadAsync("product-images", request.Files);
 
         Product product = await _productReadRepository.GetByIdAsync(request.Id);
 
