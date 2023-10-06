@@ -1,6 +1,7 @@
 ﻿using ECommerceAPI.Application.Repositories.ProductRepositories;
 using ECommerceAPI.Application.RequestParameters;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceAPI.Application.Features.Queries.ProductQueries.GetAllProducts;
 
@@ -13,14 +14,16 @@ public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQueryReq
         _productReadRepository = productReadRepository;
     }
 
-    public async Task<GetAllProductsQueryResponse> Handle(GetAllProductsQueryRequest request, CancellationToken cancellationToken)
+    public async Task<GetAllProductsQueryResponse> Handle(GetAllProductsQueryRequest request,
+        CancellationToken cancellationToken)
     {
         // paginator needs total count information to get other pages
         var totalCount = _productReadRepository.GetAll(false).Count();
 
         var products = _productReadRepository.GetAll(false)
-        .Skip(request.Page * request.Size)
+            .Skip(request.Page * request.Size)
             .Take(request.Size)
+            .Include(p => p.ProductImageFiles)
             .Select(p => new
             {
                 p.Id,
@@ -28,7 +31,8 @@ public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQueryReq
                 p.Stock,
                 p.Price,
                 p.CreatedDate,
-                p.UpdatedDate
+                p.UpdatedDate,
+                p.ProductImageFiles
             });
 
         return new()

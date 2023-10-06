@@ -9,6 +9,7 @@ using ECommerceAPI.Application.Features.Queries.ProductQueries.GetProductById;
 using ECommerceAPI.Application.Repositories.ProductImageFileRepository;
 using MediatR;
 using ECommerceAPI.Application.Features.Commands.ProductCommands.UpdateProduct;
+using ECommerceAPI.Application.Features.Commands.ProductImageCommands.ChangeShowcaseImage;
 using ECommerceAPI.Application.Features.Commands.ProductImageCommands.DeleteProductImage;
 using ECommerceAPI.Application.Features.Commands.ProductImageCommands.UploadProductImages;
 using ECommerceAPI.Application.Features.Queries.ProductImageQueries.GetProductImages;
@@ -101,6 +102,14 @@ namespace ECommerceAPI.WebAPI.Controllers
         {
             //request.ImageId = imageId;
             DeleteProductImageCommandResponse response = await _mediator.Send(request);
+            return Ok();
+        }
+
+        [HttpPut("[action]")]
+        [Authorize(AuthenticationSchemes = "Admin")]
+        public async Task<IActionResult> ChangeShowcaseImage([FromQuery] ChangeShowcaseImageCommandRequest request)
+        {
+            ChangeShowcaseImageCommandResponse response = await _mediator.Send(request);
             return Ok();
         }
     }

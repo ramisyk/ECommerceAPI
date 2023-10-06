@@ -2,11 +2,20 @@
 
 namespace ECommerceAPI.WebAPI.Controllers;
 
-public class FilesController : Controller
+[Route(("api/[controller]"))]
+[ApiController]
+public class FilesController : ControllerBase
 {
-    // GET
-    public IActionResult Index()
-    {
-        return View();
-    }
+   private readonly IConfiguration _configuration;
+
+   public FilesController(IConfiguration configuration)
+   {
+      _configuration = configuration;
+   }
+   
+   [HttpGet("[action]")]
+   public IActionResult GetBaseStorageUrl()
+   {
+      return Ok(_configuration["BaseStorageUrl"]);
+   }
 }
