@@ -35,6 +35,9 @@ builder.Services.AddApplicationServices();
 builder.Services.AddSignalRServices();
 builder.Services.AddStorage<LocalStorage>();
 
+// reach http context for get user informations
+builder.Services.AddHttpContextAccessor();
+
 // todo column options will be added
 // todo seq will be added
 Logger log = new LoggerConfiguration()

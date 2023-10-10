@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Folder Include="Contexts\" />
-    <Folder Include="Services\" />
     <Folder Include="Repositories\Common\" />
     <Folder Include="Repositories\CustomerRepository\" />
     <Folder Include="Repositories\FileRepository\" />

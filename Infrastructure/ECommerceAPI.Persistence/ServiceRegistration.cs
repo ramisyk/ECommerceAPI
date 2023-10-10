@@ -1,4 +1,6 @@
-﻿using ECommerceAPI.Application.Repositories.CustomerRepositories;
+﻿using ECommerceAPI.Application.Repositories.BasketItemRepository;
+using ECommerceAPI.Application.Repositories.BasketRepository;
+using ECommerceAPI.Application.Repositories.CustomerRepositories;
 using ECommerceAPI.Application.Repositories.FileRepositories;
 using ECommerceAPI.Application.Repositories.InvoiceFileRepository;
 using ECommerceAPI.Application.Repositories.OrderRepositories;
@@ -8,6 +10,8 @@ using ECommerceAPI.Application.Services;
 using ECommerceAPI.Application.Services.AuthenticationServices;
 using ECommerceAPI.Domain.Entities.UserEntities;
 using ECommerceAPI.Persistence.Contexts;
+using ECommerceAPI.Persistence.Repositories.BasketItemRepository;
+using ECommerceAPI.Persistence.Repositories.BasketRepository;
 using ECommerceAPI.Persistence.Repositories.CustomerRepository;
 using ECommerceAPI.Persistence.Repositories.FileRepository;
 using ECommerceAPI.Persistence.Repositories.InvoiceFileRepository;
@@ -38,6 +42,12 @@ public static class ServiceRegistration
 
         services.AddScoped<IProductReadRepository, ProductReadRepository>();
         services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
+        
+        services.AddScoped<IBasketReadRepository, BasketReadRepository>();
+        services.AddScoped<IBasketWriteRepository, BasketWriteRepository>();
+        
+        services.AddScoped<IBasketItemReadRepository, IBasketItemReadRepository>();
+        services.AddScoped<IBasketItemWriteRepository, BasketItemWriteRepository>();
 
         services.AddScoped<IFileReadRepository, FileReadRepository>();
         services.AddScoped<IFileWriteRepository, FileWriteRepository>();
@@ -52,5 +62,7 @@ public static class ServiceRegistration
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IExternalAuthentication, AuthService>();
         services.AddScoped<IInternalAuthentication, AuthService>();
+
+        services.AddScoped<IBasketService, BasketService>();
     }
 }
