@@ -39,7 +39,7 @@
     <Folder Include="Features\Queries\ProductQueries\GetAllProducts\" />
     <Folder Include="Features\Queries\ProductQueries\GetProductById\" />
     <Folder Include="Repositories\FileRepositories\" />
-    <Folder Include="Repositories\ProductImageFileRepository\" />
+    <Folder Include="Repositories\ProductImageFileRepositories\" />
     <Folder Include="Repositories\CustomerRepositories\" />
     <Folder Include="Repositories\ProductRepositories\" />
     <Folder Include="Repositories\OrderRepositories\" />

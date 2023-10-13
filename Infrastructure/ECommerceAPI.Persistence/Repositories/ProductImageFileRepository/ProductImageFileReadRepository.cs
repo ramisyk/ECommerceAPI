@@ -1,4 +1,4 @@
-﻿using ECommerceAPI.Application.Repositories.ProductImageFileRepository;
+﻿using ECommerceAPI.Application.Repositories.ProductImageFileRepositories;
 using ECommerceAPI.Domain.Entities.FileEntities;
 using ECommerceAPI.Persistence.Contexts;
 using ECommerceAPI.Persistence.Repositories.Common;

@@ -1,4 +1,4 @@
-﻿using ECommerceAPI.Application.Repositories.InvoiceFileRepository;
+﻿using ECommerceAPI.Application.Repositories.InvoiceFileRepositories;
 using ECommerceAPI.Domain.Entities.FileEntities;
 using ECommerceAPI.Persistence.Contexts;
 using ECommerceAPI.Persistence.Repositories.Common;

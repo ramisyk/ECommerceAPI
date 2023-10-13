@@ -1,4 +1,4 @@
-﻿using ECommerceAPI.Application.Repositories.ProductImageFileRepository;
+﻿using ECommerceAPI.Application.Repositories.ProductImageFileRepositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

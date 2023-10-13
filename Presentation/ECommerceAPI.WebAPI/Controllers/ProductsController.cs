@@ -6,13 +6,13 @@ using ECommerceAPI.Application.Features.Commands.ProductCommands.CreateProduct;
 using ECommerceAPI.Application.Features.Commands.ProductCommands.DeleteProduct;
 using ECommerceAPI.Application.Features.Queries.ProductQueries.GetAllProducts;
 using ECommerceAPI.Application.Features.Queries.ProductQueries.GetProductById;
-using ECommerceAPI.Application.Repositories.ProductImageFileRepository;
 using MediatR;
 using ECommerceAPI.Application.Features.Commands.ProductCommands.UpdateProduct;
 using ECommerceAPI.Application.Features.Commands.ProductImageCommands.ChangeShowcaseImage;
 using ECommerceAPI.Application.Features.Commands.ProductImageCommands.DeleteProductImage;
 using ECommerceAPI.Application.Features.Commands.ProductImageCommands.UploadProductImages;
 using ECommerceAPI.Application.Features.Queries.ProductImageQueries.GetProductImages;
+using ECommerceAPI.Application.Repositories.ProductImageFileRepositories;
 using Microsoft.AspNetCore.Authorization;
 
 namespace ECommerceAPI.WebAPI.Controllers

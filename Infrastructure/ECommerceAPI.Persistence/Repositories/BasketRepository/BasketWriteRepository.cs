@@ -1,4 +1,4 @@
-﻿using ECommerceAPI.Application.Repositories.BasketRepository;
+﻿using ECommerceAPI.Application.Repositories.BasketRepositories;
 using ECommerceAPI.Domain.Entities;
 using ECommerceAPI.Persistence.Contexts;
 using ECommerceAPI.Persistence.Repositories.Common;
