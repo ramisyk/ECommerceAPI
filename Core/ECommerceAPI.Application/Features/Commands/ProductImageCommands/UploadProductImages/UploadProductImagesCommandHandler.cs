@@ -1,5 +1,5 @@
 ﻿using ECommerceAPI.Application.Abstractions.Storage;
-using ECommerceAPI.Application.Repositories.ProductImageFileRepository;
+using ECommerceAPI.Application.Repositories.ProductImageFileRepositories;
 using ECommerceAPI.Application.Repositories.ProductRepositories;
 using ECommerceAPI.Domain.Entities;
 using ECommerceAPI.Domain.Entities.FileEntities;

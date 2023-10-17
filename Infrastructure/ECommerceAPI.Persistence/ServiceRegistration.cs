@@ -1,10 +1,10 @@
-﻿using ECommerceAPI.Application.Repositories.BasketItemRepository;
-using ECommerceAPI.Application.Repositories.BasketRepository;
+﻿using ECommerceAPI.Application.Repositories.BasketItemRepositories;
+using ECommerceAPI.Application.Repositories.BasketRepositories;
 using ECommerceAPI.Application.Repositories.CustomerRepositories;
 using ECommerceAPI.Application.Repositories.FileRepositories;
-using ECommerceAPI.Application.Repositories.InvoiceFileRepository;
+using ECommerceAPI.Application.Repositories.InvoiceFileRepositories;
 using ECommerceAPI.Application.Repositories.OrderRepositories;
-using ECommerceAPI.Application.Repositories.ProductImageFileRepository;
+using ECommerceAPI.Application.Repositories.ProductImageFileRepositories;
 using ECommerceAPI.Application.Repositories.ProductRepositories;
 using ECommerceAPI.Application.Services;
 using ECommerceAPI.Application.Services.AuthenticationServices;

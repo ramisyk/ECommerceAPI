@@ -9,7 +9,6 @@ using ECommerceAPI.Application.Features.Commands.ProductCommands.CreateProduct;
 using ECommerceAPI.Application.Features.Commands.ProductCommands.DeleteProduct;
 using ECommerceAPI.Application.Features.Queries.ProductQueries.GetAllProducts;
 using ECommerceAPI.Application.Features.Queries.ProductQueries.GetProductById;
-using ECommerceAPI.Application.Repositories.ProductImageFileRepository;
 using MediatR;
 using ECommerceAPI.Application.Features.Commands.ProductCommands.UpdateProduct;
 using ECommerceAPI.Application.Features.Commands.ProductImageCommands.ChangeShowcaseImage;
