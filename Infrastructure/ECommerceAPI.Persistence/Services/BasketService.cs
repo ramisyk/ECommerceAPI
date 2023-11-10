@@ -41,7 +41,7 @@ public class BasketService : IBasketService
         // it should return the basket if it is not included in any order
         if (!string.IsNullOrEmpty(username))
         {
-             AppUser? user = await _userManager.Users
+            AppUser? user = await _userManager.Users
                 .Include(u => u.Baskets)
                 .FirstOrDefaultAsync(u => u.UserName == username);
 
@@ -94,12 +94,16 @@ public class BasketService : IBasketService
                 bi.BasketId == basket.Id && bi.ProductId == basketItem.ProductId);
             if (_basketItem != null)
                 _basketItem.Quantity++;
-            await _basketItemWriteRepository.AddAsync(new()
+            else
             {
-                BasketId = basket.Id,
-                ProductId = basketItem.ProductId,
-                Quantity = basketItem.Quantity
-            });
+                await _basketItemWriteRepository.AddAsync(new()
+                {
+                    BasketId = basket.Id,
+                    ProductId = basketItem.ProductId,
+                    Quantity = basketItem.Quantity
+                });
+            }
+                
             await _basketItemWriteRepository.SaveAsync();
         }
         // todo throw error
