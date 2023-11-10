@@ -22,6 +22,7 @@ namespace ECommerceAPI.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Admin")]
 
     public class BasketsController : ControllerBase
     {

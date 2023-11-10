@@ -22,7 +22,9 @@ public class BasketService : IBasketService
     private readonly IBasketItemWriteRepository _basketItemWriteRepository;
 
     public BasketService(IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManager,
-        IOrderReadRepository orderReadRepository, IBasketWriteRepository basketWriteRepository, IBasketItemWriteRepository basketItemWriteRepository, IBasketItemReadRepository basketItemReadRepository, IBasketReadRepository basketReadRepository)
+        IOrderReadRepository orderReadRepository, IBasketWriteRepository basketWriteRepository,
+        IBasketItemWriteRepository basketItemWriteRepository, IBasketItemReadRepository basketItemReadRepository,
+        IBasketReadRepository basketReadRepository)
     {
         _httpContextAccessor = httpContextAccessor;
         _userManager = userManager;
@@ -37,23 +39,23 @@ public class BasketService : IBasketService
     {
         var username = _httpContextAccessor.HttpContext?.User.Identity?.Name;
         // it should return the basket if it is not included in any order
-        if (string.IsNullOrEmpty(username))
+        if (!string.IsNullOrEmpty(username))
         {
-            var user = _userManager.Users
+             AppUser? user = await _userManager.Users
                 .Include(u => u.Baskets)
-                .FirstOrDefault(u => u.UserName == username);
+                .FirstOrDefaultAsync(u => u.UserName == username);
 
             var _basket = from basket in user.Baskets
-                                                join order in _orderReadRepository.Table
-                                                on basket.Id equals order.Id into BasketOrders
-                                                from order in BasketOrders.DefaultIfEmpty()
-                                                select new
-                                                {
-                                                    Basket = basket,
-                                                    Order = order
-                                                };
+                join order in _orderReadRepository.Table
+                    on basket.Id equals order.Id into BasketOrders
+                from order in BasketOrders.DefaultIfEmpty()
+                select new
+                {
+                    Basket = basket,
+                    Order = order
+                };
+
             Basket? targetBasket = null;
-            
             if (_basket.Any(b => b.Order is null))
                 targetBasket = _basket.FirstOrDefault(b => b.Order is null)?.Basket;
             else
@@ -61,9 +63,11 @@ public class BasketService : IBasketService
                 targetBasket = new();
                 user.Baskets.Add(targetBasket);
             }
+
             await _basketWriteRepository.SaveAsync();
             return targetBasket;
         }
+
         // todo throw user not found error
         throw new Exception();
     }
@@ -71,12 +75,12 @@ public class BasketService : IBasketService
     public async Task<List<BasketItem>> GetBasketItemsAsync()
     {
         Basket? basket = await ContextUser();
-        
+
         Basket? result = await _basketReadRepository.Table
             .Include(b => b.BasketItems)
             .ThenInclude(bi => bi.Product)
             .FirstOrDefaultAsync(b => b.Id == basket.Id);
-        
+
         return result.BasketItems
             .ToList();
     }
@@ -86,7 +90,8 @@ public class BasketService : IBasketService
         Basket? basket = await ContextUser();
         if (basket != null)
         {
-            BasketItem _basketItem = await _basketItemReadRepository.GetSingleAsync(bi => bi.BasketId == basket.Id && bi.ProductId == basketItem.ProductId);
+            BasketItem _basketItem = await _basketItemReadRepository.GetSingleAsync(bi =>
+                bi.BasketId == basket.Id && bi.ProductId == basketItem.ProductId);
             if (_basketItem != null)
                 _basketItem.Quantity++;
             await _basketItemWriteRepository.AddAsync(new()
@@ -117,5 +122,6 @@ public class BasketService : IBasketService
         {
             _basketItemWriteRepository.Remove(basketItem);
             await _basketItemWriteRepository.SaveAsync();
-        }    }
+        }
+    }
 }
