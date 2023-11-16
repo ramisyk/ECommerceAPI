@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Abstractions\Hubs\" />
     <Folder Include="Abstractions\TokenServices\" />
     <Folder Include="Abstractions\Storage\LocalStorage\" />
     <Folder Include="Abstractions\Storage\AzureStorage\" />

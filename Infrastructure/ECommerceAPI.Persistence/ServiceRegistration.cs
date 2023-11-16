@@ -64,5 +64,6 @@ public static class ServiceRegistration
         services.AddScoped<IInternalAuthentication, AuthService>();
 
         services.AddScoped<IBasketService, BasketService>();
+        services.AddScoped<IOrderService, OrderService>();
     }
 }
