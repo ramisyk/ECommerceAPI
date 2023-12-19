@@ -45,6 +45,7 @@ public class OrderService : IOrderService
             TotalOrderCount = await query.CountAsync(),
             Orders = await data.Select(o => new
             {
+                Id = o.Id,
                 CreatedDate = o.CreatedDate,
                 OrderCode = o.OrderCode,
                 TotalPrice = o.Basket.BasketItems.Sum(bi => bi.Product.Price * bi.Quantity),
@@ -52,5 +53,29 @@ public class OrderService : IOrderService
             }).ToListAsync()
         };
 
+    }
+
+    public async Task<VM_Single_Order> GetOrderByIdAsync(Guid id)
+    {
+        var data = await _orderReadRepository.Table
+            .Include(o => o.Basket)
+            .ThenInclude(b => b.BasketItems)
+            .ThenInclude(bi => bi.Product)
+            .FirstOrDefaultAsync(o => o.Id == id);
+
+        return new()
+        {
+            Id = data.Id,
+            BasketItems = data.Basket.BasketItems.Select(bi => new
+            {
+                bi.Product.Name,
+                bi.Product.Price,
+                bi.Quantity
+            }),
+            Address = data.Address,
+            CreatedDate = data.CreatedDate,
+            Description = data.Description,
+            OrderCode = data.OrderCode
+        };
     }
 }
