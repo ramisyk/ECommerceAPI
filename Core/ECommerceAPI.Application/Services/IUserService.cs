@@ -7,5 +7,6 @@ namespace ECommerceAPI.Application.Services;
 public interface IUserService
 {
     Task<CreateUserResponse> CreateAsync(CreateUser user);
-    Task UpdateRefreshToken(string refreshToken, AppUser user, DateTime accessTokenExpirationDate, int refreshTokenLifeTime);
+    Task UpdateRefreshTokenAsync(string refreshToken, AppUser user, DateTime accessTokenDate, int addOnAccessTokenDate);
+    Task UpdatePasswordAsync(string userId, string resetToken, string newPassword);
 }
