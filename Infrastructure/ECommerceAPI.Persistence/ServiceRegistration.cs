@@ -1,6 +1,5 @@
 ﻿using ECommerceAPI.Application.Repositories.BasketItemRepositories;
 using ECommerceAPI.Application.Repositories.BasketRepositories;
-using ECommerceAPI.Application.Repositories.CompletedOrderRepositories;
 using ECommerceAPI.Application.Repositories.CustomerRepositories;
 using ECommerceAPI.Application.Repositories.FileRepositories;
 using ECommerceAPI.Application.Repositories.InvoiceFileRepositories;
@@ -13,7 +12,6 @@ using ECommerceAPI.Domain.Entities.UserEntities;
 using ECommerceAPI.Persistence.Contexts;
 using ECommerceAPI.Persistence.Repositories.BasketItemRepository;
 using ECommerceAPI.Persistence.Repositories.BasketRepository;
-using ECommerceAPI.Persistence.Repositories.CopletedOrder;
 using ECommerceAPI.Persistence.Repositories.CustomerRepository;
 using ECommerceAPI.Persistence.Repositories.FileRepository;
 using ECommerceAPI.Persistence.Repositories.InvoiceFileRepository;
@@ -44,9 +42,6 @@ public static class ServiceRegistration
         services.AddScoped<IOrderReadRepository, OrderReadRepository>();
         services.AddScoped<IOrderWriteRepository, OrderWriteRepository>();
 
-        services.AddScoped<ICompletedOrderReadRepository, CompletedOrderReadRepository>();
-        services.AddScoped<ICompletedOrderWriteRepository, CompletedOrderWriteRepository>();
-        
         services.AddScoped<IProductReadRepository, ProductReadRepository>();
         services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
         

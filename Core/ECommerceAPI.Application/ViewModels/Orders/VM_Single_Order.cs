@@ -8,5 +8,4 @@ public class VM_Single_Order
     public string Description { get; set; }
     public Guid Id { get; set; }
     public string OrderCode { get; set; }
-    public bool Completed { get; set; }
 }
