@@ -12,6 +12,7 @@ public class Order : BaseEntity
 
     public string OrderCode { get; set; }
     public Basket Basket { get; set; }
+    public CompletedOrder CompletedOrder { get; set; }
     // public ICollection<Product> Products { get; set; }
     // public Customer Customer { get; set; }
 }

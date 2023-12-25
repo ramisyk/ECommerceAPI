@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ECommerceAPI.Application.Features.Commands.OrderCommands.CompleteOrder;
 using ECommerceAPI.Application.Features.Commands.OrderCommands.CreateOrder;
 using ECommerceAPI.Application.Features.Queries.OrderQueries.GetAllOrders;
 using ECommerceAPI.Application.Features.Queries.OrderQueries.GetOrderById;
@@ -43,6 +44,12 @@ namespace ECommerceAPI.WebAPI.Controllers
         {
             var response = await _mediator.Send(request);
             return Ok();
+        }
+        [HttpGet("complete-order/{Id}")]
+        public async Task<ActionResult> CompleteOrder([FromRoute] CompleteOrderCommandRequest completeOrderCommandRequest)
+        {
+            CompleteOrderCommandResponse response = await _mediator.Send(completeOrderCommandRequest);
+            return Ok(response);
         }
     }
 }
