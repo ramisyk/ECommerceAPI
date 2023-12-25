@@ -1,6 +1,5 @@
 using System.Net;
 using System.Net.Mail;
-using System.Text;
 using ECommerceAPI.Application.Services;
 using Microsoft.Extensions.Configuration;
 
@@ -15,12 +14,12 @@ public class MailService : IMailService
         _configuration = configuration;
     }
 
-    public async Task SendMailAsync(string to, string subject, string body, bool isBodyHtml = true)
+    public async Task SendMessageAsync(string to, string subject, string body, bool isBodyHtml = true)
     {
-        await SendMailAsync(new[] { to }, subject, body, isBodyHtml);
+        await SendMessageAsync(new[] { to }, subject, body, isBodyHtml);
     }
 
-    public async Task SendMailAsync(string[] tos, string subject, string body, bool isBodyHtml = true)
+    public async Task SendMessageAsync(string[] tos, string subject, string body, bool isBodyHtml = true)
     {
         MailMessage mail = new();
         mail.IsBodyHtml = isBodyHtml;
@@ -36,19 +35,5 @@ public class MailService : IMailService
         smtp.EnableSsl = true;
         smtp.Host = _configuration["Mail:Host"]!;
         await smtp.SendMailAsync(mail);
-    }
-
-    public async Task SendPasswordResetMailAsync(string to, string userId, string resetToken)
-    {
-        StringBuilder mail = new();
-        mail.AppendLine("Hi!<br>If you have requested a new password, you can renew your password from the link below.<br><strong><a target=\"_blank\" href=\"");
-        mail.AppendLine(_configuration["AngularClientUrl"]);
-        mail.AppendLine("/update-password/");
-        mail.AppendLine(userId);
-        mail.AppendLine("/");
-        mail.AppendLine(resetToken);
-        mail.AppendLine("\">Click to request a new password...</a></strong><br><br><span style=\"font-size:12px;\">NOTE: If this request has not been fulfilled by you, please do not take this e-mail seriously.</span><br>Best Regards...<br><br><br>ECommerce");
-        
-        await SendMailAsync(to, "Update Password Request", mail.ToString());
     }
 }

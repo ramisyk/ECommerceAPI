@@ -19,7 +19,6 @@ using ECommerceAPI.Persistence.Repositories.OrderRepositories;
 using ECommerceAPI.Persistence.Repositories.ProductImageFileRepository;
 using ECommerceAPI.Persistence.Repositories.ProductRepositories;
 using ECommerceAPI.Persistence.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -33,8 +32,7 @@ public static class ServiceRegistration
 
         services.AddDbContext<ECommerceAPIDbContext>(options => options.UseNpgsql(Configuration.ConnectionString));
 
-        services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<ECommerceAPIDbContext>()
-            .AddDefaultTokenProviders();
+        services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<ECommerceAPIDbContext>();
 
         services.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
         services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
