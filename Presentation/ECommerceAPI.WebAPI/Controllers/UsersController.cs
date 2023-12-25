@@ -30,11 +30,5 @@ namespace ECommerceAPI.WebAPI.Controllers
             return Ok(response);
         }
         
-        [HttpGet]
-        public async Task<IActionResult> ExampleMailTest()
-        {
-            await _mailService.SendMessageAsync("ramisyk97@gmail.com", "Örnek Mail", "<strong>Bu bir örnek maildir.</strong>");
-            return Ok();
-        }
     }
 }

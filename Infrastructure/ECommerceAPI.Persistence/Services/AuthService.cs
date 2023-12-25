@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;
 using ECommerceAPI.Application.Exceptions;
+using ECommerceAPI.Application.Helpers;
 
 namespace ECommerceAPI.Persistence.Services;
 
@@ -19,14 +20,16 @@ public class AuthService : IAuthService
     private readonly ITokenHandler _tokenHandler;
     private readonly SignInManager<AppUser> _signInManager;
     private readonly IUserService _userService;
+    readonly IMailService _mailService;
 
-    public AuthService(IHttpClientFactory httpClientFactory, IConfiguration configuration, UserManager<AppUser> userManager, ITokenHandler tokenHandler, SignInManager<AppUser> signInManager, IUserService userService)
+    public AuthService(IHttpClientFactory httpClientFactory, IConfiguration configuration, UserManager<AppUser> userManager, ITokenHandler tokenHandler, SignInManager<AppUser> signInManager, IUserService userService, IMailService mailService)
     {
         _httpClient = httpClientFactory.CreateClient(); _configuration = configuration;
         _userManager = userManager;
         _tokenHandler = tokenHandler;
         _signInManager = signInManager;
         _userService = userService;
+        _mailService = mailService;
     }
 
     async Task<Token> CreateUserExternalAsync(AppUser user, string email, string name, UserLoginInfo info, int accessTokenLifeTime)
@@ -54,7 +57,7 @@ public class AuthService : IAuthService
             await _userManager.AddLoginAsync(user, info); //AspNetUserLogins
 
             Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime, user);
-            await _userService.UpdateRefreshToken(token.RefreshToken, user, token.Expiration, 5);
+            await _userService.UpdateRefreshTokenAsync(token.RefreshToken, user, token.Expiration, 5);
             return token;
         }
         throw new Exception("Invalid external authentication.");
@@ -111,7 +114,7 @@ public class AuthService : IAuthService
         if (result.Succeeded) //Authentication başarılı!
         {
             Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime, user);
-            await _userService.UpdateRefreshToken(token.RefreshToken, user, token.Expiration, 500);
+            await _userService.UpdateRefreshTokenAsync(token.RefreshToken, user, token.Expiration, 500);
             return token;
         }
         throw new AuthenticationErrorException();
@@ -123,10 +126,39 @@ public class AuthService : IAuthService
         if (user != null && user?.RefreshTokenEndDate > DateTime.UtcNow)
         {
             Token token = _tokenHandler.CreateAccessToken(15, user);
-            await _userService.UpdateRefreshToken(token.RefreshToken, user, token.Expiration, 500);
+            await _userService.UpdateRefreshTokenAsync(token.RefreshToken, user, token.Expiration, 500);
             return token;
         }
 
         throw new NotFoundUserException();
+    }
+    
+    public async Task PasswordResetAsnyc(string email)
+    {
+        AppUser user = await _userManager.FindByEmailAsync(email);
+        if (user != null)
+        {
+            string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            //byte[] tokenBytes = Encoding.UTF8.GetBytes(resetToken);
+            //resetToken = WebEncoders.Base64UrlEncode(tokenBytes);
+            resetToken = resetToken.UrlEncode();
+
+            await _mailService.SendPasswordResetMailAsync(email, user.Id, resetToken);
+        }
+    }
+
+    public async Task<bool> VerifyResetTokenAsync(string resetToken, string userId)
+    {
+        AppUser user = await _userManager.FindByIdAsync(userId);
+        if (user != null)
+        {
+            //byte[] tokenBytes = WebEncoders.Base64UrlDecode(resetToken);
+            //resetToken = Encoding.UTF8.GetString(tokenBytes);
+            resetToken = resetToken.UrlDecode();
+
+            return await _userManager.VerifyUserTokenAsync(user, _userManager.Options.Tokens.PasswordResetTokenProvider, "ResetPassword", resetToken);
+        }
+        return false;
     }
 }
