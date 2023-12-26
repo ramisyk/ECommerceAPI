@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using ECommerceAPI.Application.Abstractions.Storage;
+using ECommerceAPI.Application.Const;
+using ECommerceAPI.Application.CustomAttribute;
+using ECommerceAPI.Application.Enums;
 using ECommerceAPI.Application.Features.Commands.BasketCommands.AddItemToBasket;
 using ECommerceAPI.Application.Features.Commands.BasketCommands.RemoveBasketItem;
 using ECommerceAPI.Application.Features.Commands.BasketCommands.UpdateQuantity;
@@ -34,6 +37,7 @@ namespace ECommerceAPI.WebAPI.Controllers
         }
 
         [HttpGet]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Baskets, ActionType = ActionType.Reading, Definition = "Get Basket Items")]
         public async Task<IActionResult> GetBasketItems(
             [FromQuery] GetBasketItemsQueryRequest getBasketItemsQueryRequest)
         {
@@ -42,6 +46,7 @@ namespace ECommerceAPI.WebAPI.Controllers
         }
 
         [HttpPost]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Baskets, ActionType = ActionType.Writing, Definition = "Add Item to Basket")]
         public async Task<IActionResult> AddItemToBasket(AddItemToBasketCommandRequest addItemToBasketCommandRequest)
         {
             AddItemToBasketCommandResponse response = await _mediator.Send(addItemToBasketCommandRequest);
@@ -49,6 +54,7 @@ namespace ECommerceAPI.WebAPI.Controllers
         }
 
         [HttpPut]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Baskets, ActionType = ActionType.Updating, Definition = "Update Item Quantity")]
         public async Task<IActionResult> UpdateQuantity(UpdateQuantityCommandRequest updateQuantityCommandRequest)
         {
             UpdateQuantityCommandResponse response = await _mediator.Send(updateQuantityCommandRequest);
@@ -56,6 +62,7 @@ namespace ECommerceAPI.WebAPI.Controllers
         }
 
         [HttpDelete("{BasketItemId}")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Baskets, ActionType = ActionType.Deleting, Definition = "Delete Basket Item")]
         public async Task<IActionResult> RemoveBasketItem(
             [FromRoute] RemoveBasketItemCommandRequest removeBasketItemCommandRequest)
         {
