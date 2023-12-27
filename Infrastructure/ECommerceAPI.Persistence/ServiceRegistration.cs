@@ -66,6 +66,7 @@ public static class ServiceRegistration
         services.AddScoped<ICompletedOrderWriteRepository, CompletedOrderWriteRepository>();
         
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IExternalAuthentication, AuthService>();
         services.AddScoped<IInternalAuthentication, AuthService>();

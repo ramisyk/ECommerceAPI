@@ -2,7 +2,7 @@
 
 namespace ECommerceAPI.Domain.Entities.UserEntities;
 
-public class AppRole : IdentityRole
+public class AppRole : IdentityRole<string>
 {
     
 }
