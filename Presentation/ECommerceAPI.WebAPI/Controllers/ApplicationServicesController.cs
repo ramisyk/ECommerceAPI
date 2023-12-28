@@ -19,9 +19,9 @@ namespace ECommerceAPI.WebAPI.Controllers
                                        "")]
     public class ApplicationServicesController : ControllerBase
     {
-        private IApplicationServices _applicationServices;
+        private IApplicationService _applicationServices;
 
-        public ApplicationServicesController(IApplicationServices applicationServices)
+        public ApplicationServicesController(IApplicationService applicationServices)
         {
             _applicationServices = applicationServices;
         }

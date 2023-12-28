@@ -19,7 +19,7 @@ public static class ServiceRegistration
         serviceCollection.AddScoped<IStorageService, StorageService>();
         serviceCollection.AddScoped<ITokenHandler, TokenHandler>();
         serviceCollection.AddScoped<IMailService, MailService>();
-        serviceCollection.AddScoped<IApplicationServices, ApplicationServices>();
+        serviceCollection.AddScoped<IApplicationService, ApplicationServices>();
 
     }
 

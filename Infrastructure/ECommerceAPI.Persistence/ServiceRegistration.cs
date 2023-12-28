@@ -2,8 +2,10 @@
 using ECommerceAPI.Application.Repositories.BasketRepositories;
 using ECommerceAPI.Application.Repositories.CompletedOrderRepositories;
 using ECommerceAPI.Application.Repositories.CustomerRepositories;
+using ECommerceAPI.Application.Repositories.EndpointRepositories;
 using ECommerceAPI.Application.Repositories.FileRepositories;
 using ECommerceAPI.Application.Repositories.InvoiceFileRepositories;
+using ECommerceAPI.Application.Repositories.MenuRepositories;
 using ECommerceAPI.Application.Repositories.OrderRepositories;
 using ECommerceAPI.Application.Repositories.ProductImageFileRepositories;
 using ECommerceAPI.Application.Repositories.ProductRepositories;
@@ -15,8 +17,10 @@ using ECommerceAPI.Persistence.Repositories.BasketItemRepository;
 using ECommerceAPI.Persistence.Repositories.BasketRepository;
 using ECommerceAPI.Persistence.Repositories.CompletedOrderRepositories;
 using ECommerceAPI.Persistence.Repositories.CustomerRepository;
+using ECommerceAPI.Persistence.Repositories.EndpointRepositories;
 using ECommerceAPI.Persistence.Repositories.FileRepository;
 using ECommerceAPI.Persistence.Repositories.InvoiceFileRepository;
+using ECommerceAPI.Persistence.Repositories.MenuRepositories;
 using ECommerceAPI.Persistence.Repositories.OrderRepositories;
 using ECommerceAPI.Persistence.Repositories.ProductImageFileRepository;
 using ECommerceAPI.Persistence.Repositories.ProductRepositories;
@@ -65,6 +69,12 @@ public static class ServiceRegistration
         services.AddScoped<ICompletedOrderReadRepository, CompletedOrderReadRepository>();
         services.AddScoped<ICompletedOrderWriteRepository, CompletedOrderWriteRepository>();
         
+        services.AddScoped<IEndpointReadRepository, EndpointReadRepository>();
+        services.AddScoped<IEndpointWriteRepository, EndpointWriteRepository>();
+        
+        services.AddScoped<IMenuReadRepository, MenuReadRepository>();
+        services.AddScoped<IMenuWriteRepository, MenuWriteRepository>();
+        
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IAuthService, AuthService>();
@@ -73,5 +83,6 @@ public static class ServiceRegistration
 
         services.AddScoped<IBasketService, BasketService>();
         services.AddScoped<IOrderService, OrderService>();
+        services.AddScoped<IAuthorizationEndpointService, AuthorizationEndpointService>();
     }
 }

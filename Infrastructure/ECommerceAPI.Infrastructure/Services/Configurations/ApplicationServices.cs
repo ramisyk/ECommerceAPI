@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace ECommerceAPI.Infrastructure.Services.Configurations;
 
-public class ApplicationServices : IApplicationServices
+public class ApplicationServices : IApplicationService
 {
     public List<Menu> GetAuthorizeDefinitionEndpoints(Type type)
     {

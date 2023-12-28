@@ -1,0 +1,5 @@
+namespace ECommerceAPI.Application.Features.Commands.AuthorizationEndpointsCommands.AssignRoleEndpoint;
+
+public class AssignRoleEndpointCommandResponse
+{
+}

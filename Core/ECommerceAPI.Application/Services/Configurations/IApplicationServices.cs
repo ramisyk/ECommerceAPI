@@ -2,7 +2,7 @@ using ECommerceAPI.Application.Dtos.Configurations;
 
 namespace ECommerceAPI.Application.Services.Configurations;
 
-public interface IApplicationServices
+public interface IApplicationService
 {
     List<Menu> GetAuthorizeDefinitionEndpoints(Type type);
 }
