@@ -24,7 +24,6 @@
     <Folder Include="Abstractions\Storage\LocalStorage\" />
     <Folder Include="Abstractions\Storage\AzureStorage\" />
     <Folder Include="Dtos\Facebook\" />
-    <Folder Include="Dtos\UserDtos\" />
     <Folder Include="Features\Commands\AppUserCommands\CreateUser\" />
     <Folder Include="Features\Commands\AppUserCommands\LoginUser\" />
     <Folder Include="Features\Commands\AppUserCommands\GoogleLogin\" />
