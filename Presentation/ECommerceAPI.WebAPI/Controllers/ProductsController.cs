@@ -1,7 +1,5 @@
-﻿using ECommerceAPI.Application.Repositories.ProductRepositories;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using ECommerceAPI.Application.Abstractions.Storage;
 using ECommerceAPI.Application.Const;
 using ECommerceAPI.Application.CustomAttribute;
 using ECommerceAPI.Application.Enums;
@@ -15,7 +13,7 @@ using ECommerceAPI.Application.Features.Commands.ProductImageCommands.ChangeShow
 using ECommerceAPI.Application.Features.Commands.ProductImageCommands.DeleteProductImage;
 using ECommerceAPI.Application.Features.Commands.ProductImageCommands.UploadProductImages;
 using ECommerceAPI.Application.Features.Queries.ProductImageQueries.GetProductImages;
-using ECommerceAPI.Application.Repositories.ProductImageFileRepositories;
+using ECommerceAPI.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 
 namespace ECommerceAPI.WebAPI.Controllers
@@ -25,22 +23,13 @@ namespace ECommerceAPI.WebAPI.Controllers
 
     public class ProductsController : ControllerBase
     {
-        private readonly IProductWriteRepository _productWriteRepository;
-        private readonly IProductReadRepository _productReadRepository;
-        private readonly IProductImageFileWriteRepository _productImageFileWriteRepository;
-        private readonly IStorageService _storageService;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+
         private readonly IMediator _mediator;
-
-
-        public ProductsController(IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository, IProductImageFileWriteRepository productImageFileWriteRepository, IStorageService storageService, IWebHostEnvironment webHostEnvironment, IMediator mediator)
+        private readonly IProductService _productService;
+        public ProductsController(IMediator mediator, IProductService productService)
         {
-            _productWriteRepository = productWriteRepository;
-            _productReadRepository = productReadRepository;
-            _productImageFileWriteRepository = productImageFileWriteRepository;
-            _storageService = storageService;
-            _webHostEnvironment = webHostEnvironment;
             _mediator = mediator;
+            _productService = productService;
         }
 
         [HttpGet]
@@ -119,6 +108,13 @@ namespace ECommerceAPI.WebAPI.Controllers
         {
             ChangeShowcaseImageCommandResponse response = await _mediator.Send(request);
             return Ok();
+        }
+        
+        [HttpGet("qrcode/{productId}")]
+        public async Task<IActionResult> GetQrCodeToProduct([FromRoute] Guid productId)
+        {
+            var data = await _productService.QrCodeToProductAsync(productId);
+            return File(data, "image/png");
         }
     }
 }
